@@ -1,0 +1,1606 @@
+urn: urn:trustinkey:risk:library:pqc-migration-anssi-v1
+locale: fr
+ref_id: PQC-MIGRATION-v1
+name: "Framework Migration Post-Quantique (PQC) — TrustInKey / ANSSI"
+description: >
+  Framework d'audit exhaustif pour la migration vers la cryptographie post-quantique.
+  Basé sur le Guide de Sélection d'Algorithmes Cryptographiques de l'ANSSI,
+  le NIST CSWP 48, ETSI TS 103 744 et CNSA 2.0.
+  Couvre l'inventaire cryptographique, la gouvernance, la migration PKI,
+  la crypto-agilité et la conformité réglementaire NIS2/DORA/eIDAS 2.0.
+  Conçu pour les auditeurs PKI et RSSI des OIV, banques et administrations françaises.
+version: 1
+publication_date: 2025-06-25
+provider: TrustInKey — Dr. Nidal Selmane
+packager: trustinkey
+translations:
+  en:
+    name: "Post-Quantum Cryptography (PQC) Migration Framework — TrustInKey / ANSSI"
+    description: >
+      Exhaustive audit framework for post-quantum cryptography migration.
+      Based on ANSSI Cryptographic Algorithm Selection Guide, NIST CSWP 48,
+      ETSI TS 103 744, and CNSA 2.0. Covers cryptographic inventory, governance,
+      PKI migration, crypto-agility, and NIS2/DORA/eIDAS 2.0 regulatory compliance.
+      Designed for PKI auditors and CISOs in French OIVs, banks, and public administrations.
+
+objects:
+  framework:
+    urn: urn:trustinkey:risk:framework:pqc-migration-anssi-v1
+    ref_id: PQC-MIGRATION-v1
+    name: "Framework Migration Post-Quantique (PQC)"
+    description: >
+      Audit exhaustif de préparation et migration PQC — ANSSI / NIS2 / DORA / eIDAS 2.0
+    translations:
+      en:
+        name: "Post-Quantum Cryptography (PQC) Migration Framework"
+        description: >
+          Exhaustive PQC readiness and migration audit — ANSSI / NIS2 / DORA / eIDAS 2.0
+    requirement_nodes:
+
+      # ============================================================
+      # DOMAINE 1 — INVENTAIRE CRYPTOGRAPHIQUE
+      # ============================================================
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1
+        assessable: false
+        depth: 1
+        ref_id: D1
+        name: "Inventaire Cryptographique"
+        translations:
+          en:
+            name: "Cryptographic Inventory"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-G1
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1
+        ref_id: D1-G1
+        name: "Découverte et Cartographie des Actifs"
+        translations:
+          en:
+            name: "Asset Discovery and Mapping"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-01
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-G1
+        ref_id: D1-01
+        name: "Inventaire exhaustif des algorithmes asymétriques en production"
+        description: >
+          L'organisation dispose d'un inventaire complet et à jour de tous les algorithmes
+          à clé publique utilisés (RSA, ECDSA, ECDH, DH, DSA) avec leur localisation,
+          taille de clé, durée de vie et criticité. Référence ANSSI : Guide Sélection Algo §3.
+        importance: mandatory
+        translations:
+          en:
+            name: "Exhaustive inventory of asymmetric algorithms in production"
+            description: >
+              The organization maintains a complete and up-to-date inventory of all
+              public-key algorithms in use (RSA, ECDSA, ECDH, DH, DSA) with location,
+              key size, lifetime and criticality. ANSSI ref: Algorithm Selection Guide §3.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-02
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-G1
+        ref_id: D1-02
+        name: "Inventaire des certificats X.509 (PKI interne et externe)"
+        description: >
+          Tous les certificats X.509 sont répertoriés : CA racines, CA intermédiaires,
+          certificats feuilles TLS, authentification, signature, chiffrement.
+          Champs obligatoires : algorithme, taille clé, date expiration, émetteur, usage.
+        importance: mandatory
+        translations:
+          en:
+            name: "X.509 certificate inventory (internal and external PKI)"
+            description: >
+              All X.509 certificates are catalogued: root CAs, intermediate CAs,
+              leaf certificates (TLS, authentication, signing, encryption).
+              Mandatory fields: algorithm, key size, expiry date, issuer, usage.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-03
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-G1
+        ref_id: D1-03
+        name: "Cartographie des protocoles cryptographiques réseau"
+        description: >
+          Inventaire des protocoles réseau utilisant de la cryptographie asymétrique :
+          TLS (version, suites), SSH, IPsec/IKE, S/MIME, OpenPGP, DNSSEC, OCSP, CRL.
+          Identification des endpoints exposés à Internet vs internes.
+        importance: mandatory
+        translations:
+          en:
+            name: "Network cryptographic protocol mapping"
+            description: >
+              Inventory of network protocols using asymmetric cryptography:
+              TLS (version, cipher suites), SSH, IPsec/IKE, S/MIME, OpenPGP, DNSSEC, OCSP, CRL.
+              Identification of internet-facing vs internal endpoints.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-04
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-G1
+        ref_id: D1-04
+        name: "Inventaire des HSM et équipements cryptographiques matériels"
+        description: >
+          Recensement de tous les HSM (Hardware Security Modules), cartes à puce,
+          TPM, tokens cryptographiques. Pour chaque équipement : fabricant, firmware,
+          algorithmes supportés, capacité mise à jour PQC (firmware upgradeable ou remplacement requis).
+        importance: mandatory
+        translations:
+          en:
+            name: "HSM and hardware cryptographic equipment inventory"
+            description: >
+              Inventory of all HSMs, smart cards, TPMs, cryptographic tokens.
+              For each device: vendor, firmware, supported algorithms,
+              PQC upgrade path (firmware upgradeable vs hardware replacement required).
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-05
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-G1
+        ref_id: D1-05
+        name: "Inventaire des données à longue durée de sensibilité (HNDL)"
+        description: >
+          Identification des données chiffrées dont la confidentialité doit être
+          garantie au-delà de 10 ans (données médicales, fiscales, secrets d'état,
+          propriété intellectuelle). Ces données sont prioritaires pour la migration
+          PQC en raison du risque Harvest Now, Decrypt Later.
+        importance: mandatory
+        translations:
+          en:
+            name: "Long-term sensitivity data inventory (HNDL threat)"
+            description: >
+              Identification of encrypted data requiring confidentiality beyond 10 years
+              (medical, fiscal, state secrets, IP). These are priority PQC migration targets
+              due to the Harvest Now, Decrypt Later threat.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-G2
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1
+        ref_id: D1-G2
+        name: "Classification et Priorisation"
+        translations:
+          en:
+            name: "Classification and Prioritization"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-06
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-G2
+        ref_id: D1-06
+        name: "Classification des actifs cryptographiques par criticité"
+        description: >
+          Chaque actif cryptographique est classifié selon trois axes :
+          (1) Impact si compromis (C/I/D), (2) Durée de vie requise des données,
+          (3) Coût/délai de migration. Score de priorité PQC calculé et documenté.
+        importance: mandatory
+        translations:
+          en:
+            name: "Cryptographic asset classification by criticality"
+            description: >
+              Each cryptographic asset is classified on three axes:
+              (1) Impact if compromised (C/I/A), (2) Required data lifetime,
+              (3) Migration cost/timeline. PQC priority score calculated and documented.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-07
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-G2
+        ref_id: D1-07
+        name: "Identification des dépendances et chaînes cryptographiques"
+        description: >
+          Cartographie des dépendances entre systèmes cryptographiques :
+          chaînes de confiance PKI, protocoles imbriqués (TLS dans VPN),
+          systèmes legacy sans chemin de migration identifié.
+          Documentation des dépendances bloquantes pour le plan de migration.
+        importance: mandatory
+        translations:
+          en:
+            name: "Cryptographic dependency and chain mapping"
+            description: >
+              Mapping of dependencies between cryptographic systems:
+              PKI trust chains, nested protocols (TLS within VPN),
+              legacy systems with no identified migration path.
+              Documentation of blocking dependencies for the migration plan.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-08
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D1-G2
+        ref_id: D1-08
+        name: "Évaluation de l'exposition au risque HNDL"
+        description: >
+          Estimation du volume de données chiffrées potentiellement collectées
+          par des adversaires étatiques (Harvest Now, Decrypt Later).
+          Évaluation de la fenêtre temporelle de risque basée sur les estimations
+          ANSSI/ENISA de disponibilité d'un ordinateur quantique cryptographiquement pertinent (CRQC).
+        importance: mandatory
+        translations:
+          en:
+            name: "HNDL risk exposure assessment"
+            description: >
+              Estimation of encrypted data volume potentially collected by state adversaries
+              (Harvest Now, Decrypt Later). Risk window assessment based on
+              ANSSI/ENISA estimates for a Cryptographically Relevant Quantum Computer (CRQC).
+
+      # ============================================================
+      # DOMAINE 2 — GOUVERNANCE ET PILOTAGE
+      # ============================================================
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2
+        assessable: false
+        depth: 1
+        ref_id: D2
+        name: "Gouvernance et Pilotage de la Migration"
+        translations:
+          en:
+            name: "Migration Governance and Steering"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G1
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2
+        ref_id: D2-G1
+        name: "Organisation et Responsabilités"
+        translations:
+          en:
+            name: "Organization and Responsibilities"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-01
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G1
+        ref_id: D2-01
+        name: "Désignation d'un responsable migration PQC (Crypto Officer)"
+        description: >
+          Un responsable nommément désigné pilote la migration PQC avec mandat
+          explicite de la direction. Rôle, périmètre et autorité documentés.
+          Compétences requises : cryptographie, PKI, gestion de projet.
+        importance: mandatory
+        translations:
+          en:
+            name: "Appointment of a PQC migration owner (Crypto Officer)"
+            description: >
+              A named owner leads PQC migration with explicit executive mandate.
+              Role, scope and authority documented.
+              Required skills: cryptography, PKI, project management.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-02
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G1
+        ref_id: D2-02
+        name: "Comité de pilotage migration PQC constitué"
+        description: >
+          Existence d'un comité de pilotage incluant RSSI, DSI, DPO, représentant métier.
+          Fréquence de réunion définie (minimum trimestrielle).
+          Compte-rendus de réunion archivés et opposables.
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC migration steering committee established"
+            description: >
+              Steering committee including CISO, CIO, DPO, business representative.
+              Meeting frequency defined (minimum quarterly).
+              Meeting minutes archived and auditable.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-03
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G1
+        ref_id: D2-03
+        name: "Budget migration PQC alloué et approuvé"
+        description: >
+          Budget dédié à la migration PQC formellement approuvé par la direction.
+          Couverture minimale : inventaire, tests, remplacement HSM, formation, audits.
+          Horizon budgétaire aligné sur le plan de migration (minimum 3 ans).
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC migration budget allocated and approved"
+            description: >
+              Dedicated PQC migration budget formally approved by management.
+              Minimum coverage: inventory, testing, HSM replacement, training, audits.
+              Budget horizon aligned with migration plan (minimum 3 years).
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G2
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2
+        ref_id: D2-G2
+        name: "Politique Cryptographique"
+        translations:
+          en:
+            name: "Cryptographic Policy"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-04
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G2
+        ref_id: D2-04
+        name: "Politique cryptographique documentée et approuvée"
+        description: >
+          Document de politique cryptographique couvrant : algorithmes autorisés/interdits,
+          tailles de clés minimales, durées de vie des clés/certificats,
+          exigences HSM, procédures de renouvellement.
+          Alignée sur les recommandations ANSSI en vigueur.
+        importance: mandatory
+        translations:
+          en:
+            name: "Cryptographic policy documented and approved"
+            description: >
+              Cryptographic policy document covering: allowed/forbidden algorithms,
+              minimum key sizes, key/certificate lifetimes,
+              HSM requirements, renewal procedures.
+              Aligned with current ANSSI recommendations.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-05
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G2
+        ref_id: D2-05
+        name: "Politique de crypto-agilité définie"
+        description: >
+          La politique cryptographique intègre un principe de crypto-agilité :
+          capacité à remplacer un algorithme compromis en moins de 90 jours.
+          Procédures de remplacement d'urgence documentées et testées.
+          Référence ANSSI : Recommandations de sécurité relatives à TLS §4.
+        importance: mandatory
+        translations:
+          en:
+            name: "Crypto-agility policy defined"
+            description: >
+              Cryptographic policy embeds crypto-agility principle:
+              ability to replace a compromised algorithm within 90 days.
+              Emergency replacement procedures documented and tested.
+              ANSSI ref: TLS Security Recommendations §4.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-06
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G2
+        ref_id: D2-06
+        name: "Veille réglementaire et normative PQC assurée"
+        description: >
+          Processus de veille sur les publications ANSSI, NIST, ETSI, ENISA relatives
+          à la cryptographie post-quantique. Responsable de veille désigné.
+          Délai de prise en compte des nouvelles recommandations défini (<6 mois).
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC regulatory and normative monitoring in place"
+            description: >
+              Monitoring process for ANSSI, NIST, ETSI, ENISA publications on PQC.
+              Named monitoring owner. Deadline for incorporating new recommendations (<6 months).
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G3
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2
+        ref_id: D2-G3
+        name: "Plan de Migration"
+        translations:
+          en:
+            name: "Migration Plan"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-07
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G3
+        ref_id: D2-07
+        name: "Plan de migration PQC formalisé avec jalons"
+        description: >
+          Document de plan de migration PQC avec : périmètre, jalons, responsables,
+          dépendances, critères de succès. Horizon minimum 5 ans.
+          Revue annuelle documentée. Approbation RSSI et direction.
+        importance: mandatory
+        translations:
+          en:
+            name: "Formalized PQC migration plan with milestones"
+            description: >
+              PQC migration plan document with: scope, milestones, owners,
+              dependencies, success criteria. Minimum 5-year horizon.
+              Annual review documented. CISO and management approval.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-08
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G3
+        ref_id: D2-08
+        name: "Priorisation basée sur le risque HNDL documentée"
+        description: >
+          Le plan de migration priorise explicitement les systèmes protégeant
+          des données à longue durée de sensibilité (>10 ans).
+          Justification documentée pour chaque priorité de migration.
+          Délais de migration des données HNDL critiques < 24 mois.
+        importance: mandatory
+        translations:
+          en:
+            name: "Risk-based prioritization (HNDL) documented"
+            description: >
+              Migration plan explicitly prioritizes systems protecting
+              long-term sensitive data (>10 years).
+              Documented justification for each migration priority.
+              Critical HNDL data migration timeline < 24 months.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-09
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G3
+        ref_id: D2-09
+        name: "Stratégie de migration hybride définie"
+        description: >
+          La stratégie de transition prévoit une phase hybride (classique + PQC simultanés)
+          pour garantir la continuité de service et l'interopérabilité.
+          Durée de la phase hybride définie. Critères de fin de phase hybride documentés.
+          Référence : ANSSI, NIST SP 800-131A Rev.3.
+        importance: mandatory
+        translations:
+          en:
+            name: "Hybrid migration strategy defined"
+            description: >
+              Transition strategy includes a hybrid phase (classical + PQC simultaneously)
+              to ensure service continuity and interoperability.
+              Hybrid phase duration defined. Exit criteria documented.
+              Reference: ANSSI, NIST SP 800-131A Rev.3.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-10
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D2-G3
+        ref_id: D2-10
+        name: "Gestion des fournisseurs et sous-traitants intégrée au plan"
+        description: >
+          Le plan de migration inclut les dépendances fournisseurs critiques :
+          éditeurs logiciels, équipementiers réseau, prestataires PKI/CA.
+          Clauses contractuelles PQC incluses dans les nouveaux contrats.
+          Roadmap PQC des fournisseurs critiques obtenue et analysée.
+        importance: mandatory
+        translations:
+          en:
+            name: "Vendor and supplier management integrated in migration plan"
+            description: >
+              Migration plan includes critical vendor dependencies:
+              software vendors, network equipment, PKI/CA providers.
+              PQC contractual clauses included in new contracts.
+              PQC roadmap from critical vendors obtained and analyzed.
+
+      # ============================================================
+      # DOMAINE 3 — SÉLECTION ALGORITHMIQUE (ANSSI)
+      # ============================================================
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3
+        assessable: false
+        depth: 1
+        ref_id: D3
+        name: "Sélection Algorithmique Post-Quantique"
+        translations:
+          en:
+            name: "Post-Quantum Algorithm Selection"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G1
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3
+        ref_id: D3-G1
+        name: "Algorithmes de Signature Numérique"
+        translations:
+          en:
+            name: "Digital Signature Algorithms"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-01
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G1
+        ref_id: D3-01
+        name: "Adoption de ML-DSA (FIPS 204 / CRYSTALS-Dilithium) pour les signatures"
+        description: >
+          ML-DSA est l'algorithme de signature PQC principal retenu par NIST (FIPS 204)
+          et recommandé par l'ANSSI pour les usages de signature numérique.
+          Niveau de sécurité minimum : ML-DSA-65 (niveau 3, équivalent 128 bits classique).
+          Usage PKI : signature de certificats, CRL, OCSP, horodatage.
+        importance: mandatory
+        translations:
+          en:
+            name: "ML-DSA (FIPS 204 / CRYSTALS-Dilithium) adoption for signatures"
+            description: >
+              ML-DSA is the primary PQC signature algorithm standardized by NIST (FIPS 204)
+              and recommended by ANSSI for digital signature use cases.
+              Minimum security level: ML-DSA-65 (level 3, classical 128-bit equivalent).
+              PKI use: certificate signing, CRL, OCSP, timestamping.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-02
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G1
+        ref_id: D3-02
+        name: "Évaluation de SLH-DSA (FIPS 205 / SPHINCS+) pour les racines de confiance"
+        description: >
+          SLH-DSA (FIPS 205) est basé sur des fonctions de hachage — conservation
+          de la preuve de sécurité même en cas de faiblesse des réseaux euclidiens.
+          Recommandé pour les CA racines et les clés à très longue durée de vie.
+          Impact : taille de signature plus grande (~8KB à ~50KB). Évaluation documentée.
+        importance: recommended
+        translations:
+          en:
+            name: "SLH-DSA (FIPS 205 / SPHINCS+) evaluation for trust anchors"
+            description: >
+              SLH-DSA (FIPS 205) is hash-based — security proof preserved even if
+              lattice assumptions weaken. Recommended for root CAs and very long-lived keys.
+              Trade-off: larger signature size (~8KB to ~50KB). Documented evaluation required.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-03
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G1
+        ref_id: D3-03
+        name: "Évaluation de FN-DSA (FIPS 206 / FALCON) pour les cas contraints"
+        description: >
+          FN-DSA (FIPS 206) offre des signatures compactes (~700 octets) adaptées
+          aux environnements contraints (IoT, cartes à puce, protocoles réseau).
+          Complexité d'implémentation élevée (arithmétique sur réseaux NTRU cyclotomiques).
+          Usage recommandé uniquement si la taille de signature est un critère bloquant.
+        importance: recommended
+        translations:
+          en:
+            name: "FN-DSA (FIPS 206 / FALCON) evaluation for constrained environments"
+            description: >
+              FN-DSA (FIPS 206) provides compact signatures (~700 bytes) for constrained
+              environments (IoT, smart cards, network protocols).
+              High implementation complexity (NTRU cyclotomic lattice arithmetic).
+              Recommended only when signature size is a blocking constraint.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G2
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3
+        ref_id: D3-G2
+        name: "Algorithmes d'Échange de Clés et Chiffrement"
+        translations:
+          en:
+            name: "Key Exchange and Encryption Algorithms"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-04
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G2
+        ref_id: D3-04
+        name: "Adoption de ML-KEM (FIPS 203 / CRYSTALS-Kyber) pour l'échange de clés"
+        description: >
+          ML-KEM est l'algorithme KEM (Key Encapsulation Mechanism) PQC standard NIST
+          (FIPS 203). Recommandé pour TLS 1.3, SSH, IPsec.
+          Niveau minimum : ML-KEM-768 (niveau 3). ML-KEM-1024 pour usages sensibles.
+          Priorisé sur ML-KEM-512 (niveau 1 insuffisant pour données sensibles selon ANSSI).
+        importance: mandatory
+        translations:
+          en:
+            name: "ML-KEM (FIPS 203 / CRYSTALS-Kyber) adoption for key exchange"
+            description: >
+              ML-KEM is the NIST standard PQC KEM algorithm (FIPS 203).
+              Recommended for TLS 1.3, SSH, IPsec.
+              Minimum level: ML-KEM-768 (level 3). ML-KEM-1024 for sensitive use cases.
+              ML-KEM-512 (level 1) insufficient for sensitive data per ANSSI.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-05
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G2
+        ref_id: D3-05
+        name: "Mode hybride classique+PQC activé pour les échanges de clés"
+        description: >
+          Pendant la phase de transition, les échanges de clés combinent un algorithme
+          classique (ECDH P-256 ou X25519) avec ML-KEM en mode hybride.
+          Exemples : X25519+ML-KEM-768 (IETF draft-ietf-tls-hybrid-design).
+          Le secret hybride est combiné de sorte que la sécurité soit celle du meilleur des deux.
+        importance: mandatory
+        translations:
+          en:
+            name: "Classical+PQC hybrid mode enabled for key exchanges"
+            description: >
+              During transition, key exchanges combine a classical algorithm
+              (ECDH P-256 or X25519) with ML-KEM in hybrid mode.
+              Examples: X25519+ML-KEM-768 (IETF draft-ietf-tls-hybrid-design).
+              Hybrid secret combined so security equals the stronger of both components.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-06
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G2
+        ref_id: D3-06
+        name: "Chiffrement symétrique renforcé (AES-256 minimum)"
+        description: >
+          Les algorithmes symétriques (AES, ChaCha20) résistent aux attaques quantiques
+          avec doublement de la taille de clé effective (algorithme de Grover).
+          AES-128 est insuffisant post-quantique. AES-256 minimum obligatoire.
+          SHA-256 reste acceptable. SHA-384/SHA-512 recommandés pour les usages critiques.
+        importance: mandatory
+        translations:
+          en:
+            name: "Reinforced symmetric encryption (AES-256 minimum)"
+            description: >
+              Symmetric algorithms (AES, ChaCha20) resist quantum attacks with
+              effective key size halved (Grover's algorithm).
+              AES-128 insufficient post-quantum. AES-256 minimum mandatory.
+              SHA-256 remains acceptable. SHA-384/SHA-512 recommended for critical use cases.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G3
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3
+        ref_id: D3-G3
+        name: "Algorithmes Interdits et Dépréciation"
+        translations:
+          en:
+            name: "Forbidden Algorithms and Deprecation"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-07
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G3
+        ref_id: D3-07
+        name: "Plan de dépréciation de RSA documenté"
+        description: >
+          RSA est vulnérable à l'algorithme de Shor sur ordinateur quantique.
+          Plan de remplacement de RSA (toutes tailles de clés) documenté et daté.
+          RSA-2048 : migration planifiée avant 2030. RSA-4096 : toléré en phase hybride.
+          Aucun nouveau déploiement RSA sans validation exceptionnelle du Crypto Officer.
+        importance: mandatory
+        translations:
+          en:
+            name: "RSA deprecation plan documented"
+            description: >
+              RSA is vulnerable to Shor's algorithm on a quantum computer.
+              RSA replacement plan (all key sizes) documented and dated.
+              RSA-2048: migration planned before 2030. RSA-4096: tolerated in hybrid phase.
+              No new RSA deployment without exceptional Crypto Officer approval.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-08
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G3
+        ref_id: D3-08
+        name: "Plan de dépréciation de ECDSA/ECDH documenté"
+        description: >
+          ECDSA et ECDH sur courbes elliptiques sont vulnérables à l'algorithme de Shor.
+          Plan de remplacement documenté. ECDH P-256/X25519 tolérés en hybride PQC uniquement.
+          ECDSA pour signatures : remplacement par ML-DSA planifié et daté.
+          Courbes NIST P-384/P-521 : usage en phase hybride jusqu'en 2030 maximum.
+        importance: mandatory
+        translations:
+          en:
+            name: "ECDSA/ECDH deprecation plan documented"
+            description: >
+              ECDSA and ECDH on elliptic curves are vulnerable to Shor's algorithm.
+              Replacement plan documented. ECDH P-256/X25519 tolerated in PQC hybrid only.
+              ECDSA for signatures: replacement by ML-DSA planned and dated.
+              NIST P-384/P-521 curves: hybrid phase use until 2030 maximum.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-09
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D3-G3
+        ref_id: D3-09
+        name: "Algorithmes interdits éliminés (MD5, SHA-1, DES, 3DES, RC4)"
+        description: >
+          Les algorithmes classiquement faibles sont interdits indépendamment de la menace quantique.
+          MD5, SHA-1 : interdits pour signatures et intégrité. SHA-1 toléré HMAC uniquement.
+          DES, 3DES, RC4 : interdits. AES-ECB : interdit. Export ciphers : interdits.
+          Vérification active de l'absence de ces algorithmes dans les configurations TLS/SSH.
+        importance: mandatory
+        translations:
+          en:
+            name: "Forbidden algorithms eliminated (MD5, SHA-1, DES, 3DES, RC4)"
+            description: >
+              Classically weak algorithms are forbidden regardless of quantum threat.
+              MD5, SHA-1: forbidden for signatures and integrity. SHA-1 tolerated for HMAC only.
+              DES, 3DES, RC4: forbidden. AES-ECB: forbidden. Export ciphers: forbidden.
+              Active verification of absence in TLS/SSH configurations required.
+
+      # ============================================================
+      # DOMAINE 4 — MIGRATION PKI ET CERTIFICATS
+      # ============================================================
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4
+        assessable: false
+        depth: 1
+        ref_id: D4
+        name: "Migration PKI et Certificats"
+        translations:
+          en:
+            name: "PKI and Certificate Migration"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-G1
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4
+        ref_id: D4-G1
+        name: "Architecture PKI Post-Quantique"
+        translations:
+          en:
+            name: "Post-Quantum PKI Architecture"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-01
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-G1
+        ref_id: D4-01
+        name: "Architecture PKI hybride définie (CA classique + CA PQC)"
+        description: >
+          Architecture cible définie pour la PKI post-quantique :
+          Option A — PKI parallèle : CA PQC distincte de la CA classique.
+          Option B — PKI hybride : CA émettant des certificats dual-key (ECDSA + ML-DSA).
+          Option C — Migration progressive : remplacement CA par CA avec certificats croisés.
+          Choix documenté avec justification technique et calendrier.
+        importance: mandatory
+        translations:
+          en:
+            name: "Hybrid PKI architecture defined (classical CA + PQC CA)"
+            description: >
+              Target architecture defined for post-quantum PKI:
+              Option A — Parallel PKI: separate PQC CA from classical CA.
+              Option B — Hybrid PKI: CA issuing dual-key certificates (ECDSA + ML-DSA).
+              Option C — Progressive migration: CA replacement with cross-certificates.
+              Choice documented with technical justification and timeline.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-02
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-G1
+        ref_id: D4-02
+        name: "CA racine PQC générée sur HSM certifié"
+        description: >
+          La nouvelle CA racine PQC est générée exclusivement sur HSM avec support PQC certifié.
+          Cérémonie de génération de clé documentée et auditée.
+          HSM conforme CC EAL4+ minimum, support ML-DSA et ML-KEM validé par le fabricant.
+          Clé CA racine PQC en SLH-DSA si disponible sur le HSM cible.
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC root CA generated on certified HSM"
+            description: >
+              New PQC root CA generated exclusively on HSM with certified PQC support.
+              Key generation ceremony documented and audited.
+              HSM compliant CC EAL4+ minimum, ML-DSA and ML-KEM support validated by vendor.
+              PQC root CA key in SLH-DSA if available on target HSM.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-03
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-G1
+        ref_id: D4-03
+        name: "Chaîne de confiance hybride validée (cross-certification)"
+        description: >
+          La chaîne de confiance hybride est validée : les certificats CA classiques
+          et PQC sont cross-certifiés pour garantir la continuité de validation
+          pendant la phase de transition. Tests de validation effectués sur
+          les principaux magasins de confiance (Windows, Linux, Java, navigateurs).
+        importance: mandatory
+        translations:
+          en:
+            name: "Hybrid trust chain validated (cross-certification)"
+            description: >
+              Hybrid trust chain validated: classical and PQC CA certificates
+              are cross-certified to ensure continuous validation during transition.
+              Validation tests performed on major trust stores
+              (Windows, Linux, Java, browsers).
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-04
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-G1
+        ref_id: D4-04
+        name: "Support RFC 9480 (Certificate Management Protocol PQC) évalué"
+        description: >
+          Évaluation de la compatibilité du logiciel CA avec RFC 9480
+          (Certificate Management Protocol updates for PQC) et
+          RFC 9481 (algorithmes PQC dans CMP).
+          Feuille de route du fournisseur CA obtenue pour le support PQC.
+        importance: recommended
+        translations:
+          en:
+            name: "RFC 9480 (CMP for PQC) support evaluated"
+            description: >
+              Evaluation of CA software compatibility with RFC 9480
+              (Certificate Management Protocol updates for PQC) and
+              RFC 9481 (PQC algorithms in CMP).
+              CA vendor PQC support roadmap obtained.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-G2
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4
+        ref_id: D4-G2
+        name: "Cycle de Vie des Certificats PQC"
+        translations:
+          en:
+            name: "PQC Certificate Lifecycle"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-05
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-G2
+        ref_id: D4-05
+        name: "Durées de vie des certificats PQC définies et réduites"
+        description: >
+          Les certificats PQC ont des durées de vie adaptées au contexte de transition :
+          Certificats TLS feuilles : maximum 90 jours (aligné CA/Browser Forum).
+          Certificats d'authentification : maximum 1 an.
+          CA intermédiaires : maximum 5 ans.
+          CA racines PQC : maximum 20 ans (vs 25-30 ans classique).
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC certificate lifetimes defined and reduced"
+            description: >
+              PQC certificate lifetimes adapted to transition context:
+              TLS leaf certificates: maximum 90 days (aligned CA/Browser Forum).
+              Authentication certificates: maximum 1 year.
+              Intermediate CAs: maximum 5 years.
+              PQC root CAs: maximum 20 years (vs 25-30 years classical).
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-06
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-G2
+        ref_id: D4-06
+        name: "Processus de renouvellement automatisé des certificats PQC"
+        description: >
+          L'automatisation du renouvellement est obligatoire pour les certificats
+          à courte durée de vie (<1 an). Protocoles supportés : ACME (RFC 8555),
+          CMP (RFC 9480), SCEP. Taux de renouvellement manuel < 5% de l'inventaire.
+          Alertes automatiques sur les certificats en échec de renouvellement.
+        importance: mandatory
+        translations:
+          en:
+            name: "Automated PQC certificate renewal process"
+            description: >
+              Renewal automation mandatory for short-lived certificates (<1 year).
+              Supported protocols: ACME (RFC 8555), CMP (RFC 9480), SCEP.
+              Manual renewal rate < 5% of inventory.
+              Automatic alerts on renewal failures.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-07
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-G2
+        ref_id: D4-07
+        name: "Infrastructure de révocation PQC opérationnelle (CRL/OCSP)"
+        description: >
+          L'infrastructure de révocation supporte les certificats PQC :
+          CRL signées ML-DSA publiées et accessibles.
+          Répondeurs OCSP compatibles ML-DSA opérationnels.
+          Délai de révocation d'urgence < 1 heure documenté et testé.
+          OCSP Stapling activé sur les serveurs TLS pour performance.
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC revocation infrastructure operational (CRL/OCSP)"
+            description: >
+              Revocation infrastructure supports PQC certificates:
+              ML-DSA signed CRLs published and accessible.
+              ML-DSA compatible OCSP responders operational.
+              Emergency revocation delay < 1 hour documented and tested.
+              OCSP Stapling enabled on TLS servers for performance.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-08
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D4-G2
+        ref_id: D4-08
+        name: "Impact taille des clés et certificats PQC évalué"
+        description: >
+          L'impact opérationnel de la taille accrue des clés et certificats PQC est évalué :
+          ML-DSA-65 : clé publique 1952 B, signature 3293 B (vs ECDSA P-256 : 64 B / 64 B).
+          Impact sur TLS handshake, MTU réseau, performances d'authentification.
+          Plan d'adaptation de l'infrastructure réseau (MTU, buffers, timeout) documenté.
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC key and certificate size impact evaluated"
+            description: >
+              Operational impact of increased PQC key and certificate sizes evaluated:
+              ML-DSA-65: public key 1952 B, signature 3293 B (vs ECDSA P-256: 64 B / 64 B).
+              Impact on TLS handshake, network MTU, authentication performance.
+              Network infrastructure adaptation plan (MTU, buffers, timeout) documented.
+
+      # ============================================================
+      # DOMAINE 5 — CRYPTO-AGILITÉ ET IMPLÉMENTATION
+      # ============================================================
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5
+        assessable: false
+        depth: 1
+        ref_id: D5
+        name: "Crypto-Agilité et Implémentation Technique"
+        translations:
+          en:
+            name: "Crypto-Agility and Technical Implementation"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-G1
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5
+        ref_id: D5-G1
+        name: "Architecture Crypto-Agile"
+        translations:
+          en:
+            name: "Crypto-Agile Architecture"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-01
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-G1
+        ref_id: D5-01
+        name: "Abstraction cryptographique implémentée (couche crypto-agile)"
+        description: >
+          Les applications n'appellent pas directement des primitives cryptographiques
+          mais une couche d'abstraction configurable (ex: provider pattern).
+          Remplacement d'algorithme sans recompilation des applications.
+          Délai de basculement d'algorithme testé et documenté (objectif < 48h).
+        importance: mandatory
+        translations:
+          en:
+            name: "Cryptographic abstraction implemented (crypto-agile layer)"
+            description: >
+              Applications do not call cryptographic primitives directly
+              but a configurable abstraction layer (e.g., provider pattern).
+              Algorithm replacement without application recompilation.
+              Algorithm switchover time tested and documented (target < 48h).
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-02
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-G1
+        ref_id: D5-02
+        name: "Bibliothèques cryptographiques PQC qualifiées utilisées"
+        description: >
+          Seules des bibliothèques PQC éprouvées et maintenues sont utilisées en production :
+          liboqs (Open Quantum Safe), BouncyCastle PQC, OpenSSL 3.x avec provider PQC.
+          Aucune implémentation cryptographique maison pour les primitives PQC.
+          Veille sur les vulnérabilités des bibliothèques utilisées (CVE, bulletins).
+        importance: mandatory
+        translations:
+          en:
+            name: "Qualified PQC cryptographic libraries used"
+            description: >
+              Only proven and maintained PQC libraries used in production:
+              liboqs (Open Quantum Safe), BouncyCastle PQC, OpenSSL 3.x with PQC provider.
+              No home-built cryptographic implementations for PQC primitives.
+              Vulnerability monitoring for used libraries (CVE, advisories).
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-03
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-G1
+        ref_id: D5-03
+        name: "Tests de performance PQC effectués en conditions de production"
+        description: >
+          Benchmarks de performance PQC documentés en conditions réalistes :
+          Latence TLS handshake avec ML-KEM (target < 2x latence classique).
+          Débit de vérification de signatures ML-DSA sur les serveurs d'authentification.
+          Impact CPU/mémoire sur les équipements réseau (firewalls, load balancers).
+          Plan de capacité mis à jour en conséquence.
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC performance tests conducted under production conditions"
+            description: >
+              PQC performance benchmarks documented under realistic conditions:
+              TLS handshake latency with ML-KEM (target < 2x classical latency).
+              ML-DSA signature verification throughput on authentication servers.
+              CPU/memory impact on network equipment (firewalls, load balancers).
+              Capacity plan updated accordingly.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-G2
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5
+        ref_id: D5-G2
+        name: "Protocoles Réseau PQC"
+        translations:
+          en:
+            name: "PQC Network Protocols"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-04
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-G2
+        ref_id: D5-04
+        name: "TLS 1.3 avec suites hybrides PQC déployé"
+        description: >
+          TLS 1.3 est le minimum obligatoire. TLS 1.2 en voie d'élimination documentée.
+          Suites hybrides PQC activées : X25519MLKEM768 (IANA recommandée),
+          SecP256r1MLKEM768 (compatibilité maximale).
+          TLS 1.0 et TLS 1.1 : désactivés et vérifiés. SSL 3.0 : interdit.
+        importance: mandatory
+        translations:
+          en:
+            name: "TLS 1.3 with PQC hybrid cipher suites deployed"
+            description: >
+              TLS 1.3 is the mandatory minimum. TLS 1.2 documented for elimination.
+              PQC hybrid suites enabled: X25519MLKEM768 (IANA recommended),
+              SecP256r1MLKEM768 (maximum compatibility).
+              TLS 1.0 and TLS 1.1: disabled and verified. SSL 3.0: forbidden.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-05
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-G2
+        ref_id: D5-05
+        name: "SSH avec algorithmes PQC configuré"
+        description: >
+          OpenSSH 9.x+ : échange de clés sntrup761x25519-sha512 ou ML-KEM activé.
+          Désactivation de ssh-dss (DSA). RSA minimum 3072 bits pendant la transition.
+          Ed25519 conservé comme algorithme de signature classique de référence.
+          Plan de migration vers ML-DSA pour l'authentification SSH documenté.
+        importance: mandatory
+        translations:
+          en:
+            name: "SSH with PQC algorithms configured"
+            description: >
+              OpenSSH 9.x+: sntrup761x25519-sha512 or ML-KEM key exchange enabled.
+              ssh-dss (DSA) disabled. RSA minimum 3072 bits during transition.
+              Ed25519 retained as reference classical signature algorithm.
+              Migration plan to ML-DSA for SSH authentication documented.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-06
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-G2
+        ref_id: D5-06
+        name: "VPN IPsec/IKEv2 avec extensions PQC évalué"
+        description: >
+          Évaluation du support PQC des équipements VPN (IKEv2 + ML-KEM via RFC 9370).
+          Équipements sans support PQC identifiés avec calendrier de remplacement.
+          Solutions de contournement documentées pour les équipements legacy
+          (ex: tunnel TLS hybride PQC en surcouche).
+        importance: mandatory
+        translations:
+          en:
+            name: "IPsec/IKEv2 VPN with PQC extensions evaluated"
+            description: >
+              PQC support evaluation of VPN equipment (IKEv2 + ML-KEM via RFC 9370).
+              Equipment without PQC support identified with replacement timeline.
+              Workarounds documented for legacy equipment
+              (e.g., PQC hybrid TLS tunnel as overlay).
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-07
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D5-G2
+        ref_id: D5-07
+        name: "Code signing et intégrité logicielle migrés vers PQC"
+        description: >
+          Les mécanismes de signature de code (firmware, logiciels, mises à jour)
+          sont migrés vers ML-DSA ou en mode hybride ECDSA+ML-DSA.
+          Priorité maximale : les clés de signature de firmware hard-codées
+          ne peuvent pas être mises à jour post-déploiement — migration urgente.
+          Pipeline CI/CD intégrant la signature PQC documenté et opérationnel.
+        importance: mandatory
+        translations:
+          en:
+            name: "Code signing and software integrity migrated to PQC"
+            description: >
+              Code signing mechanisms (firmware, software, updates)
+              migrated to ML-DSA or ECDSA+ML-DSA hybrid mode.
+              Maximum priority: hard-coded firmware signing keys
+              cannot be updated post-deployment — urgent migration.
+              CI/CD pipeline integrating PQC signing documented and operational.
+
+      # ============================================================
+      # DOMAINE 6 — HSM ET GESTION DES CLÉS
+      # ============================================================
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6
+        assessable: false
+        depth: 1
+        ref_id: D6
+        name: "HSM et Gestion des Clés Post-Quantiques"
+        translations:
+          en:
+            name: "HSM and Post-Quantum Key Management"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-G1
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6
+        ref_id: D6-G1
+        name: "Capacité PQC des HSM"
+        translations:
+          en:
+            name: "HSM PQC Capability"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-01
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-G1
+        ref_id: D6-01
+        name: "Roadmap PQC des fabricants HSM obtenue et analysée"
+        description: >
+          Pour chaque HSM en production, la roadmap de support PQC du fabricant est obtenue :
+          Thales Luna : support ML-DSA/ML-KEM, version firmware, date de disponibilité.
+          Utimaco : idem. Entrust nShield : idem. AWS CloudHSM / Azure Dedicated HSM : idem.
+          HSM sans roadmap PQC identifiés avec plan de remplacement budgété.
+        importance: mandatory
+        translations:
+          en:
+            name: "HSM vendor PQC roadmap obtained and analyzed"
+            description: >
+              For each production HSM, vendor PQC support roadmap obtained:
+              Thales Luna: ML-DSA/ML-KEM support, firmware version, availability date.
+              Utimaco: same. Entrust nShield: same. AWS CloudHSM / Azure Dedicated HSM: same.
+              HSMs without PQC roadmap identified with budgeted replacement plan.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-02
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-G1
+        ref_id: D6-02
+        name: "Tests de validation PQC sur HSM effectués"
+        description: >
+          Validation technique du support PQC sur les HSM cibles :
+          Génération de paire de clés ML-DSA-65 et ML-KEM-768 sur HSM.
+          Signature et vérification ML-DSA depuis le HSM.
+          Encapsulation/décapsulation ML-KEM via PKCS#11.
+          Performance mesurée : opérations/seconde pour ML-DSA sign et ML-KEM decaps.
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC validation tests on HSM performed"
+            description: >
+              Technical PQC support validation on target HSMs:
+              ML-DSA-65 and ML-KEM-768 key pair generation on HSM.
+              ML-DSA signing and verification from HSM.
+              ML-KEM encapsulation/decapsulation via PKCS#11.
+              Performance measured: operations/second for ML-DSA sign and ML-KEM decaps.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-03
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-G1
+        ref_id: D6-03
+        name: "Procédures de cérémonie de clé PQC définies"
+        description: >
+          Les procédures de cérémonie de génération des clés PQC sont documentées :
+          Nombre de gardiens de clé (minimum 3, quorum 2).
+          Documentation de la cérémonie (vidéo, log HSM, signatures des gardiens).
+          Stockage des matériaux de sauvegarde (key shares) en coffres distincts.
+          Test de restauration effectué et documenté.
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC key ceremony procedures defined"
+            description: >
+              PQC key generation ceremony procedures documented:
+              Number of key custodians (minimum 3, quorum 2).
+              Ceremony documentation (video, HSM log, custodian signatures).
+              Backup material storage (key shares) in separate vaults.
+              Restoration test performed and documented.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-G2
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6
+        ref_id: D6-G2
+        name: "Gestion du Cycle de Vie des Clés PQC"
+        translations:
+          en:
+            name: "PQC Key Lifecycle Management"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-04
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-G2
+        ref_id: D6-04
+        name: "Politique de rotation des clés PQC définie"
+        description: >
+          Durées de vie maximales des clés PQC définies et documentées :
+          Clés ML-KEM éphémères (TLS) : rotation à chaque session (Perfect Forward Secrecy).
+          Clés ML-DSA d'authentification : rotation annuelle maximum.
+          Clés ML-DSA de CA : durée de vie du certificat CA (< 5 ans pour sub-CA).
+          Procédure de rotation d'urgence (compromission) testée et documentée.
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC key rotation policy defined"
+            description: >
+              Maximum PQC key lifetimes defined and documented:
+              Ephemeral ML-KEM keys (TLS): rotation per session (Perfect Forward Secrecy).
+              ML-DSA authentication keys: maximum annual rotation.
+              ML-DSA CA keys: certificate lifetime (< 5 years for sub-CA).
+              Emergency rotation procedure (compromise) tested and documented.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-05
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D6-G2
+        ref_id: D6-05
+        name: "Destruction sécurisée des clés classiques migrées"
+        description: >
+          Procédure de destruction sécurisée des clés asymétriques classiques
+          après migration PQC complète du périmètre correspondant.
+          Destruction sur HSM : commande de destruction avec log d'audit.
+          Destruction hors HSM : écrasement certifié ou destruction physique.
+          Certificat de destruction produit et archivé.
+        importance: mandatory
+        translations:
+          en:
+            name: "Secure destruction of migrated classical keys"
+            description: >
+              Secure destruction procedure for classical asymmetric keys
+              after complete PQC migration of the corresponding scope.
+              HSM destruction: destruction command with audit log.
+              Off-HSM destruction: certified overwrite or physical destruction.
+              Destruction certificate produced and archived.
+
+      # ============================================================
+      # DOMAINE 7 — CONFORMITÉ RÉGLEMENTAIRE
+      # ============================================================
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7
+        assessable: false
+        depth: 1
+        ref_id: D7
+        name: "Conformité Réglementaire PQC"
+        translations:
+          en:
+            name: "PQC Regulatory Compliance"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-G1
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7
+        ref_id: D7-G1
+        name: "NIS2 et Résilience Opérationnelle"
+        translations:
+          en:
+            name: "NIS2 and Operational Resilience"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-01
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-G1
+        ref_id: D7-01
+        name: "Risque quantique intégré à l'analyse de risques NIS2 (Art.21)"
+        description: >
+          L'analyse de risques NIS2 Article 21 inclut explicitement la menace quantique
+          comme vecteur de risque. Scénarios HNDL documentés avec impact et probabilité.
+          Mesures de traitement du risque quantique approuvées par la direction.
+          Rapport de risque quantique produit annuellement.
+        importance: mandatory
+        translations:
+          en:
+            name: "Quantum risk integrated in NIS2 risk analysis (Art.21)"
+            description: >
+              NIS2 Article 21 risk analysis explicitly includes the quantum threat
+              as a risk vector. HNDL scenarios documented with impact and probability.
+              Quantum risk treatment measures approved by management.
+              Quantum risk report produced annually.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-02
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-G1
+        ref_id: D7-02
+        name: "Plan de continuité intégrant la compromission cryptographique"
+        description: >
+          Le PCA/PRA inclut un scénario de compromission cryptographique massive :
+          procédure de révocation d'urgence à grande échelle,
+          activation de la crypto-agilité (bascule algorithme en < 48h),
+          communication de crise aux parties prenantes.
+          Test de ce scénario effectué et documenté (minimum annuel).
+        importance: mandatory
+        translations:
+          en:
+            name: "Business continuity plan integrating cryptographic compromise"
+            description: >
+              BCP/DRP includes a mass cryptographic compromise scenario:
+              large-scale emergency revocation procedure,
+              crypto-agility activation (algorithm switchover < 48h),
+              crisis communication to stakeholders.
+              Scenario tested and documented (minimum annual).
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-G2
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7
+        ref_id: D7-G2
+        name: "DORA et Résilience Financière"
+        translations:
+          en:
+            name: "DORA and Financial Resilience"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-03
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-G2
+        ref_id: D7-03
+        name: "Menace quantique documentée dans le registre des risques ICT (DORA Art.6)"
+        description: >
+          DORA Article 6 exige un cadre de gestion du risque ICT.
+          La menace quantique est documentée dans le registre ICT avec :
+          description de la menace HNDL et Shor, actifs exposés,
+          mesures de contrôle actuelles (algorithmes classiques),
+          plan de traitement (migration PQC) avec échéances.
+        importance: mandatory
+        translations:
+          en:
+            name: "Quantum threat documented in ICT risk register (DORA Art.6)"
+            description: >
+              DORA Article 6 requires an ICT risk management framework.
+              Quantum threat documented in ICT register with:
+              HNDL and Shor threat description, exposed assets,
+              current control measures (classical algorithms),
+              treatment plan (PQC migration) with deadlines.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-04
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-G2
+        ref_id: D7-04
+        name: "Preuve de vérification cryptographique disponible pour audit DORA"
+        description: >
+          DORA Art.9 exige des mécanismes de protection des données en transit et au repos.
+          Preuves disponibles pour audit : configuration TLS avec suites PQC,
+          journaux de vérification de certificats, rapports de scan cryptographique,
+          attestations HSM, résultats de tests de pénétration incluant vecteurs crypto.
+        importance: mandatory
+        translations:
+          en:
+            name: "Cryptographic verification evidence available for DORA audit"
+            description: >
+              DORA Art.9 requires data protection mechanisms in transit and at rest.
+              Evidence available for audit: TLS configuration with PQC suites,
+              certificate verification logs, cryptographic scan reports,
+              HSM attestations, penetration test results including crypto vectors.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-G3
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7
+        ref_id: D7-G3
+        name: "eIDAS 2.0 et Confiance Numérique"
+        translations:
+          en:
+            name: "eIDAS 2.0 and Digital Trust"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-05
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-G3
+        ref_id: D7-05
+        name: "Compatibilité eIDAS 2.0 des certificats qualifiés PQC évaluée"
+        description: >
+          Évaluation de la roadmap eIDAS 2.0 pour les certificats qualifiés PQC :
+          ETSI EN 319 412 (profil certificat qualifié) : version PQC en cours de standardisation.
+          Prestataires de service de confiance qualifiés (QTSP) : roadmap PQC obtenue.
+          Signature électronique qualifiée (QES) avec ML-DSA : calendrier de disponibilité.
+          EUDI Wallet : compatibilité PQC des mécanismes d'attestation.
+        importance: recommended
+        translations:
+          en:
+            name: "eIDAS 2.0 compatibility of PQC qualified certificates evaluated"
+            description: >
+              eIDAS 2.0 roadmap evaluation for PQC qualified certificates:
+              ETSI EN 319 412 (qualified certificate profile): PQC version being standardized.
+              Qualified Trust Service Providers (QTSP): PQC roadmap obtained.
+              Qualified Electronic Signature (QES) with ML-DSA: availability timeline.
+              EUDI Wallet: PQC compatibility of attestation mechanisms.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-06
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D7-G3
+        ref_id: D7-06
+        name: "RGS v2.0 et qualification ANSSI : impact PQC analysé"
+        description: >
+          Pour les systèmes soumis au RGS ou à une qualification ANSSI :
+          Analyse de l'impact de la migration PQC sur la qualification existante.
+          Contact avec l'ANSSI sur les exigences PQC pour le maintien de qualification.
+          Calendrier de re-qualification post-migration PQC documenté.
+          Produits cryptographiques qualifiés avec support PQC identifiés (liste CSPN/CC ANSSI).
+        importance: mandatory
+        translations:
+          en:
+            name: "RGS v2.0 and ANSSI qualification: PQC impact analyzed"
+            description: >
+              For systems subject to RGS or ANSSI qualification:
+              Analysis of PQC migration impact on existing qualification.
+              ANSSI contact on PQC requirements for qualification maintenance.
+              Post-PQC migration re-qualification timeline documented.
+              Qualified cryptographic products with PQC support identified (ANSSI CSPN/CC list).
+
+      # ============================================================
+      # DOMAINE 8 — TESTS, AUDIT ET AMÉLIORATION CONTINUE
+      # ============================================================
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8
+        assessable: false
+        depth: 1
+        ref_id: D8
+        name: "Tests, Audit et Amélioration Continue"
+        translations:
+          en:
+            name: "Testing, Audit and Continuous Improvement"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-G1
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8
+        ref_id: D8-G1
+        name: "Tests Techniques"
+        translations:
+          en:
+            name: "Technical Testing"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-01
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-G1
+        ref_id: D8-01
+        name: "Scan de détection des algorithmes classiques vulnérables effectué"
+        description: >
+          Scans réguliers (minimum trimestriels) de détection des algorithmes
+          classiques sur les endpoints réseau : TLS, SSH, VPN, API.
+          Outils : testssl.sh, nmap ssl-enum-ciphers, ssh-audit, SSLyze.
+          Rapport de scan avec liste des algorithmes détectés et plan de remédiation.
+          Objectif : 0 algorithme RSA/ECDSA sans hybride PQC sur les flux sensibles.
+        importance: mandatory
+        translations:
+          en:
+            name: "Vulnerable classical algorithm detection scan performed"
+            description: >
+              Regular scans (minimum quarterly) detecting classical algorithms
+              on network endpoints: TLS, SSH, VPN, API.
+              Tools: testssl.sh, nmap ssl-enum-ciphers, ssh-audit, SSLyze.
+              Scan report with detected algorithms list and remediation plan.
+              Target: 0 RSA/ECDSA algorithm without PQC hybrid on sensitive flows.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-02
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-G1
+        ref_id: D8-02
+        name: "Tests d'interopérabilité PQC effectués"
+        description: >
+          Tests d'interopérabilité PQC avec les partenaires et systèmes externes :
+          Validation TLS hybride PQC avec les navigateurs majeurs (Chrome, Firefox, Edge).
+          Interopérabilité avec les CA partenaires (TLS mTLS inter-organisationnel).
+          Tests avec les bibliothèques clientes (Java, Python, Go, Node.js, .NET).
+          Résultats documentés avec liste des incompatibilités identifiées.
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC interoperability tests performed"
+            description: >
+              PQC interoperability tests with partners and external systems:
+              Hybrid PQC TLS validation with major browsers (Chrome, Firefox, Edge).
+              Interoperability with partner CAs (inter-organizational mTLS).
+              Tests with client libraries (Java, Python, Go, Node.js, .NET).
+              Results documented with list of identified incompatibilities.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-03
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-G1
+        ref_id: D8-03
+        name: "Test de pénétration incluant vecteurs cryptographiques PQC"
+        description: >
+          Les tests d'intrusion périodiques incluent des vecteurs liés à la cryptographie :
+          Détection de downgrade TLS vers algorithmes classiques faibles.
+          Test de la robustesse de l'implémentation hybride (fail-safe vers PQC).
+          Vérification de l'absence de secrets dans les logs (clés, matériaux cryptographiques).
+          Rapport pentest avec section cryptographie et suivi de remédiation.
+        importance: mandatory
+        translations:
+          en:
+            name: "Penetration test including PQC cryptographic vectors"
+            description: >
+              Periodic penetration tests include cryptography-related vectors:
+              Detection of TLS downgrade to weak classical algorithms.
+              Hybrid implementation robustness test (fail-safe toward PQC).
+              Verification of absence of secrets in logs (keys, cryptographic material).
+              Pentest report with cryptography section and remediation tracking.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-G2
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8
+        ref_id: D8-G2
+        name: "Audit et Métriques"
+        translations:
+          en:
+            name: "Audit and Metrics"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-04
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-G2
+        ref_id: D8-04
+        name: "Tableau de bord de progression migration PQC publié"
+        description: >
+          Tableau de bord de migration PQC produit et partagé avec la direction (minimum trimestriel).
+          Métriques minimales : % certificats migrés vers PQC, % flux TLS hybride PQC,
+          % HSM avec support PQC, nombre d'algorithmes classiques résiduels,
+          écarts par rapport au plan (jalons atteints vs prévus).
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC migration progress dashboard published"
+            description: >
+              PQC migration dashboard produced and shared with management (minimum quarterly).
+              Minimum metrics: % certificates migrated to PQC, % TLS flows with PQC hybrid,
+              % HSMs with PQC support, number of residual classical algorithms,
+              deviations from plan (milestones achieved vs planned).
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-05
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-G2
+        ref_id: D8-05
+        name: "Audit interne annuel de la migration PQC"
+        description: >
+          Audit interne annuel vérifiant l'avancement et la conformité de la migration PQC.
+          Périmètre : inventaire cryptographique, conformité politique, avancement plan.
+          Auditeurs : équipe audit interne ou prestataire PASSI.
+          Rapport d'audit avec constats, recommandations et plan d'action suivi.
+        importance: mandatory
+        translations:
+          en:
+            name: "Annual internal audit of PQC migration"
+            description: >
+              Annual internal audit verifying PQC migration progress and compliance.
+              Scope: cryptographic inventory, policy compliance, plan progress.
+              Auditors: internal audit team or PASSI-certified provider.
+              Audit report with findings, recommendations and tracked action plan.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-G3
+        assessable: false
+        depth: 2
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8
+        ref_id: D8-G3
+        name: "Formation et Sensibilisation"
+        translations:
+          en:
+            name: "Training and Awareness"
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-06
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-G3
+        ref_id: D8-06
+        name: "Formation PQC des équipes techniques et sécurité"
+        description: >
+          Programme de formation PQC pour les équipes concernées :
+          Fondamentaux de la menace quantique (Shor, Grover, HNDL) — tous niveaux.
+          Implémentation PQC (ML-DSA, ML-KEM, modes hybrides) — équipes techniques.
+          Gouvernance et audit PQC (inventaire, planification, conformité) — RSSI/auditeurs.
+          Attestations de formation archivées. Plan de formation annuel documenté.
+        importance: mandatory
+        translations:
+          en:
+            name: "PQC training for technical and security teams"
+            description: >
+              PQC training program for relevant teams:
+              Quantum threat fundamentals (Shor, Grover, HNDL) — all levels.
+              PQC implementation (ML-DSA, ML-KEM, hybrid modes) — technical teams.
+              PQC governance and audit (inventory, planning, compliance) — CISO/auditors.
+              Training certificates archived. Annual training plan documented.
+
+      - urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-07
+        assessable: true
+        depth: 3
+        parent_urn: urn:trustinkey:risk:req_node:pqc-migration-anssi-v1:D8-G3
+        ref_id: D8-07
+        name: "Sensibilisation des développeurs aux pratiques PQC-safe"
+        description: >
+          Les développeurs sont sensibilisés aux bonnes pratiques cryptographiques PQC :
+          Utilisation exclusive des bibliothèques approuvées (liste blanche).
+          Interdiction d'implémenter des primitives cryptographiques maison.
+          Revue de code obligatoire sur les composants cryptographiques.
+          Intégration d'un linter cryptographique dans les pipelines CI/CD.
+        importance: mandatory
+        translations:
+          en:
+            name: "Developer awareness on PQC-safe practices"
+            description: >
+              Developers trained on PQC-safe cryptographic best practices:
+              Exclusive use of approved libraries (whitelist).
+              Prohibition on home-built cryptographic primitives.
+              Mandatory code review on cryptographic components.
+              Cryptographic linter integrated in CI/CD pipelines.
